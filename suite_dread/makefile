@@ -1,25 +1,20 @@
 #=======================================================================================#
 # makefile
 #=======================================================================================#
-#  Created on: Oct 3, 2015
+#  Created on: Dec 21, 2015
 #      Author: puch
 #=======================================================================================#
-export build_list=host
-export makdir=pk_project
-export test_lib=$(HOME)/projects/gtest-1.7.0
+_build_:=host
 
-export build_incs+= \
-$(test_lib)/include \
-$(test_lib) \
+$(_build_)_MAK_DIR:=pk_project
 
-export cppinc= \
--I $(test_lib)/include \
+$(_build_)_PROJECT_INC_DIR=\
+$(realpath setup)                    \
+$(HOME)/projects/gtest-1.7.0/include \
 
-proj_inc_dirs=\
-setup \
+$(_build_)_PROJECT_DIR=$(realpath . )
 
-include $(makdir)/setup.mk
-include $(makdir)/project.mk
+include $($(_build_)_MAK_DIR)/project.mk
 #=======================================================================================#
 # makefile
 #=======================================================================================#

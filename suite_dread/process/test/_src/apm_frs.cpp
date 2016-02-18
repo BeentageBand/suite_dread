@@ -6,9 +6,10 @@
  *  Author: ASUS
  */ 
 /*======================================================================================*/
+#include "../../test/_inc/test_stubs.h"
 #include "dread_apm_ext.h"
-#include "dread_apm_definition.h"
 #include "dread.h"
+#include "dread_assert.h"
 /*======================================================================================*
  * Project Headers
  *======================================================================================*/
@@ -45,16 +46,23 @@ const apm::Thread_Def_T apm::Thread_Def_Table[]=
 // Apm extern definitions
 #undef APM_THREAD
 #define APM_THREAD(thread, thread_o, dep1, dep2, dep3, dep4, dep5) \
-case thread: { return new thread_o(); }
+case thread: { created_t = new thread_o(thread); }
 
 dread::Thread * apm::Create_Thread(const int thread_id)
 {
+   dread::Thread * created_t = nullptr;
+   Tr_Notify_1("thread id %d", thread_id);
+
    switch(thread_id)
    {
-   case DREAD_NULL_THREAD:{ return new dread::Thread(DREAD_NULL_THREAD);}
+   APM_THREAD_DEFINTINION_TB
    //APM_THREAD_DEFINTINION_TB
-   default: return nullptr;
+   default: break;
    }
+
+   Tr_Ensure(nullptr != created_t, " thread id not-created");
+
+   return created_t;
 }
 /*======================================================================================*
  * Method Definitions

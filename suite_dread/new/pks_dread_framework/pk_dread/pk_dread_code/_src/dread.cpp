@@ -82,26 +82,26 @@ void dread::Publish(Packet const & packet)
 
 const Packet * dread::Receive_Packet(void)
 {
-   const Packet * pk = nullptr;
-   return pk;
+   int thread = dread::Get_Current_Thread_Id();
+   return dread::Listener_Factory.get_instance(thread).receive_packet();
 }
 
 const Packet * dread::Receive_Packet_Timeout(uint32_t tout)
 {
-   const Packet * pk = nullptr;
-   return pk;
+   int thread = dread::Get_Current_Thread_Id();
+   return dread::Listener_Factory.get_instance(thread).receive_packet_timeout(tout);
 }
 
 const Packet * dread::Receive_Packet_Only(std::vector<uint32_t> const & event_list)
 {
-   const Packet * pk = nullptr;
-   return pk;
+   int thread = dread::Get_Current_Thread_Id();
+   return dread::Listener_Factory.get_instance(thread).receive_packet_only(event_list);
 }
 
 const Packet * dread::Receive_Packet_Only_Timeout(std::vector<uint32_t> const & event_list, uint32_t tout)
 {
-   const Packet * pk = nullptr;
-   return pk;
+   int thread = dread::Get_Current_Thread_Id();
+   return dread::Listener_Factory.get_instance(thread).receive_packet_only_timeout(event_list, tout);
 }
 
 bool dread::Subscribe(std::vector<uint32_t> const & event_list)
@@ -109,7 +109,7 @@ bool dread::Subscribe(std::vector<uint32_t> const & event_list)
    bool success = false;
    int thread_id = Get_Current_Thread_Id();
 
-   if(DREAD_NULL_THREAD < thread_id && thread_id < DREAD_NULL_THREAD)
+   if(DREAD_NULL_THREAD < thread_id && thread_id < DREAD_TOTAL_THREADS)
    {
       dread::Listener_Factory.get_instance(thread_id).register_events(event_list);
    }

@@ -47,6 +47,7 @@ public:
    virtual void initialize(void);
    virtual void shutdown(void);
    void run(void);
+   int join(void);
 private:
    static void * thread_func(void * argv);
    int run_thread(void);

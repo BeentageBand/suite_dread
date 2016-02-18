@@ -13,11 +13,8 @@
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
-#include "Singleton.h"
-/*=====================================================================================* 
- * Standard Includes
- *=====================================================================================*/
 #include <map>
+#include "Singleton.h"
 
 namespace apm{
 /*=====================================================================================* 
@@ -41,6 +38,8 @@ public:
    int get_thread_id(void);
    int get_app_id(void);
    int run_application(void);
+   int stop_application(void);
+   void register_thread(const int thread, const unsigned long int pthread);
    virtual ~ApplicationManager(void){};
 private:
    ApplicationManager(void);

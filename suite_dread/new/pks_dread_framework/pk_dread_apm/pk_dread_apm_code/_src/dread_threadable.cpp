@@ -12,7 +12,9 @@
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
+#include "dread_assert.h"
 #include "dread_threadable.h"
+#include "dread_apm_ext.h"
 /*=====================================================================================* 
  * Standard Includes
  *=====================================================================================*/
@@ -51,6 +53,7 @@ using namespace dread;
 
 /*=====================================================================================* 
  * Exported Function Definitions
+
  *=====================================================================================*/
 Thread::Thread(const int thread_id)
 : dread_id(thread_id)
@@ -62,8 +65,23 @@ Thread::Thread(const int thread_id)
 
 void Thread::run(void)
 {
-   this->thread_id = pthread_create(&this->thread_id, &this->attributes, Thread::thread_func,this);
-   pthread_detach(this->thread_id);
+   Tr_Notify_1("run dread id %d", (int)this->dread_id);
+   int created = pthread_create(&this->thread_id, &this->attributes, Thread::thread_func,this);
+   Tr_Notify_1("creating thread id %lu", (unsigned long)this->thread_id);
+
+   apm::Register_Thread(this->dread_id, this->thread_id);
+
+   Tr_Ensure_1(0 == created, "pthread not created = %d",created);
+
+   //pthread_detach(this->thread_id);
+}
+
+int Thread::join(void)
+{
+   std::shared_ptr<void *> argc(nullptr);
+   int ret = pthread_join(this->thread_id, argc.get());
+   argc.reset();
+   return ret;
 }
 
 int Thread::run_thread(void)
@@ -81,6 +99,7 @@ void Thread::initialize(void)
 
 void Thread::shutdown(void)
 {
+   this->join();
 
 }
 

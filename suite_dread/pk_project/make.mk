@@ -1,48 +1,154 @@
-#=======================================================================================#
-# make.mk
-#=======================================================================================#
-#  Created on: Oct 3, 2015
-#      Author: puch
-#=======================================================================================#
+##======================================================================================#
+ # make.mk
+ #======================================================================================#
+ #  Created on: Oct 3, 2015
+ #      Author: puch
+ ##=====================================================================================#
 
-cppinc+=-I $(rootdir)/$(incdir)
-cpplib=-L
-cppsrc=-c
-cppobj=-o
+##======================================================================================#
+ # DEFINE VARIABLES
+ ##=====================================================================================#
+define $(_build_)_$(_curr_)_ALL_INCS
 
-arc=ar
-arcflags=-qvc
+$(_build_)_$(_curr_)_lib_incs=\
+$(shell find $(_path_)$($(_build_)_$(_curr_)_src_dir) -name *.h )
 
-obj=.o
-cpp=.cpp
-c__=.c
-lib=.a
+$(_build_)_$(_curr_)_bin_incs=\
+$(shell find $(_path_)$($(_build_)_$(_curr_)_src_dir) -name *.h )
+ 
+endef
+
+define ITERATE_OBJ_MAKE_template
+_obj_:=$(word $(_i_), $($(_build_)_$(_curr_)_$(_tar_)_objs) )
+_src_:=$(word $(_i_), $($(_build_)_$(_curr_)_$(_tar_)_srcs) )
+$(1)
+endef
+##=====================================================================================#
+ # DEFINE RULES
+ ##====================================================================================#
+##
+ # BIN NAME MAKERULE
+ ##
+define $(_build_)_$(_curr_)_BIN_NAME_MAKE
+
+ifneq "$($(_build_)_$(_curr_)_bin_name)" ""
+$($(_build_)_BIN_DIR)/$($(_build_)_$(_curr_)_bin_name) : $($(_build_)_BIN_DIR) $($(_build_)_$(_curr_)_bin_libs) $($(_build_)_$(_curr_)_bin_objs)
+	g++ -std=c++11 -Wall -pthread $(addprefix -I, $($(_build_)_PROJECT_INC_DIR) ) \
+      -o $$@ $($(_build_)_$(_curr_)_bin_objs) -L$($(_build_)_LIB_DIR) $(patsubst $($(_build_)_LIB_DIR)/$(_lprefix_)%$(_lib_ext_),-l%,$($(_build_)_$(_curr_)_bin_libs) );
+endif
+endef
+
+##
+ # LIB NAME MAKERULE
+ ##
+define $(_build_)_$(_curr_)_LIB_NAME_MAKE
+
+ifneq "$($(_build_)_$(_curr_)_lib_name)" ""
+$($(_build_)_LIB_DIR)/$(_lprefix_)$($(_build_)_$(_curr_)_lib_name)$(_lib_ext_) : $($(_build_)_LIB_DIR) $($(_build_)_$(_curr_)_lib_objs) $($(_build_)_$(_curr_)_lib_libs)
+	ar -qvc $$@ $($(_build_)_$(_curr_)_lib_objs) $($(_build_)_$(_curr_)_lib_libs)
+endif 
+endef
+
+##
+ # OBJ NAME MAKERULE
+ ##
+define $(_build_)_$(_curr_)_OBJ_MAKE
+ifneq "$(_obj_)" ""
+$(_obj_) : $($(_build_)_OBJ_DIR) $($(_build_)_$(_curr_)_$(_tar_)_incs) $(_src_)
+	g++ -Wall -std=c++11 -pthread $(addprefix -I, $($(_build_)_PROJECT_INC_DIR) ) \
+    -c $(_src_) $($(_build_)_$(_curr_)_$(_tar_)_incs) -o $$@
+endif
+endef
+
+##======================================================================================#
+ #  EXPAND VARIABLES
+ ##=====================================================================================#
+$(eval \
+   $(call INFO_VERBOSE_template, $($(_build_)_$(_curr_)_ALL_INCS_N_SRCS) ) \
+)
+
+$(eval \
+   $(call INFO_VERBOSE_template, \
+      $(_build_)_$(_curr_)_lib_srcs=\
+      $(patsubst \
+         $($(_build_)_OBJ_DIR)/%$(_obj_ext_),\
+         $(_path_)$($(_build_)_$(_curr_)_src_dir)/%$(_src_ext_),\
+         $($(_build_)_$(_curr_)_lib_objs)\
+      ) \
+   ) \
+)
+
+$(eval \
+   $(call INFO_VERBOSE_template, \
+      $(_build_)_$(_curr_)_bin_srcs=\
+      $(patsubst \
+         $($(_build_)_OBJ_DIR)/%$(_obj_ext_),\
+         $(_path_)$($(_build_)_$(_curr_)_src_dir)/%$(_src_ext_),\
+         $($(_build_)_$(_curr_)_bin_objs)\
+      ) \
+   ) \
+)
 
 
-built_objs=$(patsubst $(src_dir)/%, $(objdir)/%$(obj), $(src_files))
-built_libs=$(addprefix -l,$(lib_files))
+##======================================================================================#
+ #  EXPAND RULES
+ ##=====================================================================================#
 
-all : $(lib_name) $(bin_name)
-	
+##
+ # CALL MAKEFILE BUILD
+ ##
 
-$(libdir)/lib%$(lib) : %_makefile.mk
-	$(MAKE) -f  $^ -C $(dir $^ );
+##
+ # .PHONY : pk_name_N
+ #
+ # all : pk_name_N
+ #
+ # pk_name_N : _pk_name_N_lib_name _pk_name_N_bin_name
+ #
+ # _pk_name_N_bin_name : _pk_name_N_bin_libs _pk_name_N_bin_objs
+ #	cc -flags -I PROJECT_INCS -o _pk_name_N_bin_name _pk_name_N_bin_objs \
+ #      pk_name_N_lib_incs -L LIB_DIR -lpk_name_bin_libs
+ #
+ # _pk_name_N_lib_name _pk_name_N_bin_libs _pk_name_N_lib_libs : _pk_name_N_lib_objs
+ #	ar -qvc $$@ -L -l_pk_name_N_lib_libs _pk_name_lib_objs
+ #
+ # _pk_name_N_bin_objs _pk_name_N_lib_objs : _pk_name_N_bin_incs $(_pk_name_N_bin_objs:%.o=.cpp) \
+ # _pk_name_N_lib_incs $(_pk_name_N_lib_objs:%.o=.cpp);
+ # 	cc -flags -I PROJECT_INCS -c $$^ -o $$@
+ ##
 
-$(objdir)/%$(obj) : $(src_dir)/%$(cpp)
-	$(gpp) $(cppflags) $(cppinc) $(cppsrc) $^ $(cppobj) $@; 
+$(info ****************************************** $(_build_)_$(_curr_) BIN MAKE ********************************)
 
-$(objdir)/%$(obj) : $(src_dir)/%$(c__)
-	$(gpp) $(cppflags) $(cppinc) $(cppsrc) $^ $(cppobj) $@; 
+$(eval \
+   $(call INFO_VERBOSE_template, \
+      $($(_build_)_$(_curr_)_BIN_NAME_MAKE) \
+   ) \
+)
 
-$(lib_name) : $(built_objs)
-	$(arc) $(arcflags) $(libdir)/lib$(lib_name)$(lib) $(built_objs) 
+$(info ****************************************** $(_build_)_$(_curr_) LIB MAKE ********************************)
 
-$(bin_name) : $(patsubst %, $(libdir)/lib%$(lib), $(lib_files)) $(built_objs)
-	$(gpp) $(cppflags) $(cppinc) $(cppobj) $(bindir)/$@ $(built_objs) -L $(libdir) $(built_libs)
-#=======================================================================================#
-# make.mk
-#=======================================================================================#
-# Changes Log
-#
-#
-#=======================================================================================#
+$(eval \
+   $(call INFO_VERBOSE_template, \
+      $($(_build_)_$(_curr_)_LIB_NAME_MAKE) \
+   ) \
+)
+
+$(info ****************************************** $(_build_)_$(_curr_) OBJ MAKE ********************************)
+
+$(foreach _tar_,lib bin, \
+   $(foreach _i_, $(shell seq 1 $(words $(_i_), $($(_build_)_$(_curr_)_$(_tar_)_objs) ) ), \
+      $(eval \
+         $(call INFO_VERBOSE_template, \
+            $(call ITERATE_OBJ_MAKE_template, $($(_build_)_$(_curr_)_OBJ_MAKE)) \
+         ) \
+      ) \
+   ) \
+)
+
+##======================================================================================#
+ # make.mk
+ #======================================================================================#
+ # Changes Log
+ #
+ #
+ ##=====================================================================================#
