@@ -4,110 +4,14 @@
 #  Created on: Oct 3, 2015
 #      Author: puch
 #=======================================================================================#
+gtest_inc=$(shell find $(test_lib)/include -name *.h)
 
-#=======================================================================================#
-# DEFINE PACKAGE RULE
-#=======================================================================================#
-define $(_build_)_$(_curr_)_MAKE
-#=======================================================================================#
-# OBJECTS DIRECTORY
-# e.g: 
-#     $(_build_)_$(_curr_)_src_dir=pk_module_N_code/_src
-#     or
-#     $(_build_)_$(_curr_)_src_dir=_src
-#=======================================================================================#
-$(_build_)_$(_curr_)_src_dir=
+all : $(libdir)/libgtest_main.a
 
-#=======================================================================================#
-# LIB REQUISITES
-#=======================================================================================#
-
-##
- # Object Requisites
- # e.g: $(_build_)_$(_curr_)_lib_objs=$($(_build_)_OBJ_DIR)/my_lib_obj$(_obj_ext_) \
- ##
-$(_build_)_$(_curr_)_lib_objs=
-
-##
- # Library Requisites
- # e.g: $(_build_)_$(_curr_)_lib_libs=$($(_build_)_LIB_DIR)/$(_lprefix_)my_lib_lib$(_lib_ext_) \
- ##
-$(_build_)_$(_curr_)_lib_libs=
-
-##
- # Target Library
- # e.g: $(_build_)_$(_curr_)_lib_name=my_lib_name
- ##
-$(_build_)_$(_curr_)_lib_name=gtest_main
-
-#=======================================================================================#
-# BIN REQUISITES
-#=======================================================================================#
-
-##
- # Object Requisites
- # e.g: $(_build_)_$(_curr_)_bin_objs=$($(_build_)_OBJ_DIR)/my_bin_obj$(_obj_ext_) \
- ##
-$(_build_)_$(_curr_)_bin_objs=
-
-##
- # Library Requisites
- # e.g: $(_build_)_$(_curr_)_bin_libs=$($(_build_)_LIB_DIR)/$(_lprefix_)my_bin_lib$(_lib_ext_) \
- ##
-$(_build_)_$(_curr_)_bin_libs=
-
-##
- # Target Binary
- # e.g: $(_build_)_$(_curr_)_bin_name=my_bin_name
- ##
-$(_build_)_$(_curr_)_bin_name=
-#=======================================================================================#
-# END PACKAGE RULE
-#=======================================================================================#
-endef
-#=======================================================================================#
-# LOCAL VARIABLES
-#=======================================================================================#
-$(_build)_GTEST_PATH:=$(HOME)/projects/gtest-1.7.0
-#=======================================================================================#
-# LOCAL DEFINES 
-#=======================================================================================#
-#all : $($(_build_)_GTEST_TARG_INC) $($(_build_)_LIB_DIR)/lib$($(_build_)_lib_name).a 
-#
-define $(_build_)_$(_curr_)_LIB_NAME_MAKE
-$($(_build_)_LIB_DIR)/$(addprefix $(_lprefix_), $(addsuffix $(_lib_ext_), $($(_build_)_$(_curr_)_lib_name) )) : \
-$($(_build)_GTEST_PATH)/make/$(addsuffix $(_lib_ext_), $($(_build_)_$(_curr_)_lib_name) ) $($(_build_)_LIB_DIR)
-	cp -sf $$< $$@;
-endef
-#=======================================================================================#
-# LOCAL DEFINE EXPANSIONS
-#=======================================================================================#
-$(eval \
-   $(call INFO_VERBOSE_template, \
-      $($(_build_)_$(_curr_)_MAKE) \
-   )\
-)
-
-#=======================================================================================#
-# LOCAL RULES EXPANSIONS
-#=======================================================================================#
-
-$(eval \
-   $(call INFO_VERBOSE_template, \
-      $($(_build_)_$(_curr_)_LIB_NAME_MAKE) \
-   )\
-)
-
-$(eval \
-   $(call INFO_VERBOSE_template, \
-      $($(_build)_GTEST_PATH)/make/$(addsuffix $(_lib_ext_), $($(_build_)_$(_curr_)_lib_name) ) : ;\
-      	$(MAKE) gtest_main -C $($(_build)_GTEST_PATH)/make/; \
-   )\
-)
-#=======================================================================================#
-# INCLUDE PK PROJECT UTILITY
-#=======================================================================================#
-
+$(libdir)/libgtest_main.a : $(test_lib)/make/gtest_main.a
+	cp -s $^ $@;
+#$(foreach i, $(gtest_inc), cp -fs $(i) $(rootdir)/$(incdir); )
+ 
 #=======================================================================================#
 # api_makefile.mk
 #=======================================================================================#

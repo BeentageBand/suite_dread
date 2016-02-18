@@ -12,9 +12,7 @@
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
-#include "dread_assert.h"
 #include "dread_threadable.h"
-#include "dread_apm_ext.h"
 /*=====================================================================================* 
  * Standard Includes
  *=====================================================================================*/
@@ -64,14 +62,7 @@ Thread::Thread(const int thread_id)
 
 void Thread::run(void)
 {
-   Tr_Notify_1("run dread id %d", (int)this->dread_id);
-   int created = pthread_create(&this->thread_id, &this->attributes, Thread::thread_func,this);
-   Tr_Notify_1("creating thread id %lu", (unsigned long)this->thread_id);
-
-   apm::Register_Thread(this->dread_id, this->thread_id);
-
-   Tr_Ensure_1(0 == created, "pthread not created = %d",created);
-
+   this->thread_id = pthread_create(&this->thread_id, &this->attributes, Thread::thread_func,this);
    pthread_detach(this->thread_id);
 }
 

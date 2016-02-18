@@ -22,7 +22,6 @@
  * Exported X-Macros
  *=====================================================================================*/
 #define DREAD_REGISTERED_THREADS \
-   DREAD_THREAD_ID(INIT_THREAD_ID,   "Application Manager") \
    DREAD_THREAD_ID(APM_THREAD_ID,   "Application Manager") \
    DREAD_THREAD_ID(TEST_THREAD_ID,  "Test Module"        ) \
 /*=====================================================================================* 

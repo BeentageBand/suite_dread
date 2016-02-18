@@ -13,7 +13,6 @@
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
-#include "dread_apm_definition.h"
 #include "dread_threadable.h"
 /*=====================================================================================* 
  * Standard Includes
@@ -39,7 +38,6 @@ extern const Thread_Def_T Thread_Def_Table[];
  * Exported Function Prototypes
  *=====================================================================================*/
 dread::Thread * Create_Thread(const int thread_id);
-void Register_Thread(const int thread, const unsigned long int pthread);
 /*=====================================================================================* 
  * Exported Function Like Macros
  *=====================================================================================*/

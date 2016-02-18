@@ -12,16 +12,14 @@
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
-#include "gtest/gtest.h" // Always gtest header goes first
+#include "gtest.h" // Always gtest header goes first
+#include "test_stubs.h"
 #include "dread.h"
 #include "dread_assert.h"
-#include "test_stubs.h"
 /*=====================================================================================* 
  * Standard Includes
  *=====================================================================================*/
 #include <iostream>
-#include <unistd.h>
-
 /*=====================================================================================* 
  * Local X-Macros
  *=====================================================================================*/
@@ -35,7 +33,7 @@
  *=====================================================================================*/
 class LocalThread : public dread::Thread
 {
-   const int id = INIT_THREAD_ID;
+   const int id = 45;
 public:
    LocalThread(void);
    virtual int on_thread(void);
@@ -61,8 +59,9 @@ static bool Test_Local_Thread = false;
  *=====================================================================================*/
 LocalThread::LocalThread(void)
 : dread::Thread(id)
-{}
+{
 
+}
 int LocalThread::on_thread(void)
 {
    Test_Local_Thread = this->is_alive;
@@ -78,14 +77,14 @@ int LocalThread::on_thread(void)
 
 TestDispatch::TestDispatch(const int id)
 : dread::Thread(id)
-{}
+{
 
+}
 int TestDispatch::on_thread(void)
 {
    std::vector<uint32_t> events(1,TEST_EVG_ALIVE);
    events.push_back(TEST_EVG_SHUTDOWN);
-   Tr_Ensure(dread::Subscribe(events), "Not able to subscribe");
-
+   dread::Subscribe(events);
    Tr_Notify(__FUNCTION__);
    while(this->is_alive)
    {
@@ -106,7 +105,7 @@ int TestDispatch::on_thread(void)
          }
       }
    }
-   Tr_Ensure(dread::Unsubscribe(events), "Not able to subscribe");
+   dread::Unsubscribe(events);
    return 0;
 }
 /*=====================================================================================* 
@@ -128,11 +127,8 @@ TEST(DreadPacket, SendPacket)
 {
    Tr_Notify("Testing Application");
    apm::Application_Manager().run_application();
-   std::stringstream ss;
-   dread::Send(0, APM_THREAD_ID, TEST_EVG_ALIVE, ss);
-   sleep(1);
-   dread::Publish(TEST_EVG_SHUTDOWN, ss);
 }
+
 /*=====================================================================================* 
  * test.cpp
  *=====================================================================================*

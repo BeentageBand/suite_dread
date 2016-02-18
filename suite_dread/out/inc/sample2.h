@@ -1,0 +1,1 @@
+/home/puch/projects/gtest-1.7.0/samples/sample2.h

@@ -17,13 +17,13 @@
 /*=====================================================================================* 
  * Standard Includes
  *=====================================================================================*/
-namespace apm{
+
 /*=====================================================================================* 
  * Exported X-Macros
  *=====================================================================================*/
 #define APM_THREAD_DEFINTINION_TB \
 APM_THREAD(APM_THREAD_ID,     TestDispatch,    DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD) \
-APM_THREAD(TEST_THREAD_ID,    TestDispatch,    DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD) \
+APM_THREAD(TEST_THREAD_ID,     TestDispatch,    DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD, DREAD_NULL_THREAD) \
 /*=====================================================================================* 
  * Exported Define Macros
  *=====================================================================================*/
@@ -31,20 +31,12 @@ APM_THREAD(TEST_THREAD_ID,    TestDispatch,    DREAD_NULL_THREAD, DREAD_NULL_THR
 /*=====================================================================================* 
  * Exported Type Declarations
  *=====================================================================================*/
-#undef APM_THREAD
-#define APM_THREAD(thread, thread_o, dep1, dep2, dep3, dep4, dep5) \
-   APM_REGISTERED_##thread,
 
-enum
-{
-   APM_THREAD_DEFINTINION_TB
-   APM_TOTAL_REGISTERED_THREADS
-};
 /*=====================================================================================* 
  * api_set.h
  *=====================================================================================*
  * Log History
  *
  *=====================================================================================*/
-} /*namespace apm*/
+
 #endif /*DREAD_APM_DEFINITIONS_H_*/
