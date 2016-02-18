@@ -1,1 +1,0 @@
-/home/puch/projects/gtest-1.7.0/xcode/Samples/FrameworkSample/widget.h
