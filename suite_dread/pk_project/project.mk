@@ -37,7 +37,6 @@ endef
 ##============================================================================#
  # BUILD MODULE ADDITION VARIABLES
  ##===========================================================================#
-
 ##
  #Generate all build modules
  ##
@@ -46,7 +45,6 @@ $(eval \
      $(_build_)_PACKAGE_FIND=$(shell find $($(_build_)_PROJECT_DIR) -name *_makefile.mk) \
    ) \
 )
-
 ##
  # BUILD_MODULE_PATH=.../pk_module_1/ .../pk_module_N/ ...
  ##
@@ -80,7 +78,7 @@ $(info ****************************************** MODULES INCS DIRS ************
 
 define USER_INC_DIRS
 
-$(_build_)_PACKAGE_INC_DIR+=$(shell find $($(_build_)_PROJECT_DIR) -path */pk_*_user 2>/dev/null)
+$(_build_)_PACKAGE_INC_DIR+=$(shell find $($(_build_)_PROJECT_DIR) -path *pk_*_user 2>/dev/null)
 $(_build_)_PACKAGE_INC_DIR+=$(shell find $($(_build_)_PROJECT_DIR) -path *_inc 2>/dev/null)
 #$(_build_)_PROJECT_INC_DIR+=$(shell find $($(_build_)_PROJECT_DIR) -path */pk_*_code/_inc 2>/dev/null)
 
@@ -140,12 +138,10 @@ $(foreach _i_,$(shell seq 1 $(words $($(_build_)_PACKAGE_NAME)) ), \
 ##============================================================================#
  # CALL RULES
  ##===========================================================================#
-
 ##
  # CALL BUILD
  ##
  $(info ****************************************** CALL BUILD ********************************)
-
 define CALL_BUILD
 .PHONY : $($(_build_)_PACKAGE_NAME)
 
