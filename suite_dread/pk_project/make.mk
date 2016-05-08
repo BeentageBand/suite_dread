@@ -7,7 +7,6 @@
 
 _gc_macros_=$($($(_build_)_FLAVOR)_MACROS)
 
-
 define $(_build_)_$(_curr_)_ALL_INCS
 
 $(_build_)_$(_curr_)_lib_incs=\
@@ -21,6 +20,7 @@ endef
 $(eval \
    $(call INFO_VERBOSE_template, $($(_build_)_$(_curr_)_ALL_INCS_N_SRCS) ) \
 )
+
 $(eval \
    $(call INFO_VERBOSE_template, \
       $(_build_)_$(_curr_)_lib_srcs=\
@@ -106,6 +106,7 @@ $(eval \
    ) \
 )
 
+
 ##
  # OBJ NAME MAKERULE
  ##
@@ -134,6 +135,7 @@ $(foreach _tar_,lib bin, \
       ) \
    ) \
 )
+
 ##
  # LIB NAME MAKERULE
  ##

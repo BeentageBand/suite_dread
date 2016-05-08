@@ -1,4 +1,38 @@
+<<<<<<< HEAD
 */out/*
 .cproject
 .project
 
+=======
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Output Directories
+*/out/*
+>>>>>>> 840c710658d09cf69663ec5d48944fd0a96d1d6d
