@@ -10,7 +10,7 @@ $(_build_)_MAK_DIR:=pk_project
 
 $(_build_)_PROJECT_INC_DIR=\
 $(realpath setup)                    \
-$(HOME)/projects/gtest-1.7.0/include \
+$(HOME)/projects/googletest/googletest/include/ \
 
 $(_build_)_PROJECT_DIR=$(realpath . )
 

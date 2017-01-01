@@ -28,4 +28,8 @@
 *.app
 
 # Output Directories
-*/out/*
+out
+.settings
+.project
+.cproject
+
