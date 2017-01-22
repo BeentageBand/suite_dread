@@ -50,7 +50,10 @@ static uint32_t Get_Time_Elapsed(void);
 /*=====================================================================================* 
  * Local Function Definitions
  *=====================================================================================*/
-
+uint32_t Get_Time_Elapsed(void)
+{
+   return 0;
+}
 /*=====================================================================================* 
  * Exported Function Definitions
  *=====================================================================================*/
@@ -106,7 +109,7 @@ Message & Dread::Receive_Message(uint32_t tout_ms)
 Message & Dread::Receive_Message(void)
 {
    //TODO receive message
-   Message msg(0);
+   static Message msg(0);
    return msg;
 }
 
