@@ -39,14 +39,19 @@ $(_build_)_MAK_DIR:=pk_project
 #======================================================#
 # PROJECT INCLUDES SEARCH PATHS
 #======================================================#
+GTEST_DIR:=$(HOME)/Dropbox/projects
+$(_build)_GTEST_PATH:=$(GTEST_DIR)/gtest-1.7.0
+
 $(_build_)_PROJECT_INC_DIR+=\
 setup             \
+$($(_build)_GTEST_PATH)/include\
 
 ifeq "$(_build_)" "avr"
 $(_build_)_PROJECT_INC_DIR+=\
 "C:/avr-gcc-4.9.2/avr-gcc/avr/include" \
 
 endif
+
 
 $(_build_)_PROJECT_DIR=$(realpath . )
 #=======================================================================================#

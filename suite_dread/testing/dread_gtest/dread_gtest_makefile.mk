@@ -26,8 +26,7 @@ $(_build_)_$(_curr_)_src_dir=_src
  # Object Requisites
  # e.g: $(_build_)_$(_curr_)_lib_objs=$($(_build_)_OBJ_DIR)/my_lib_obj$(_obj_ext_) \
  ##
-$(_build_)_$(_curr_)_lib_objs=\
-   $($(_build_)_OBJ_DIR)/dread_gtest$(_obj_ext_) \
+$(_build_)_$(_curr_)_lib_objs=
 
 ##
  # Library Requisites
@@ -39,7 +38,7 @@ $(_build_)_$(_curr_)_lib_libs=
  # Target Library
  # e.g: $(_build_)_$(_curr_)_lib_name=my_lib_name
  ##
-$(_build_)_$(_curr_)_lib_name=dread_gtest
+$(_build_)_$(_curr_)_lib_name=
 
 #=======================================================================================#
 # BIN REQUISITES
@@ -49,7 +48,8 @@ $(_build_)_$(_curr_)_lib_name=dread_gtest
  # Object Requisites
  # e.g: $(_build_)_$(_curr_)_bin_objs=$($(_build_)_OBJ_DIR)/my_bin_obj$(_obj_ext_) \
  ##
-$(_build_)_$(_curr_)_bin_objs=
+$(_build_)_$(_curr_)_bin_objs=\
+   $($(_build_)_OBJ_DIR)/dread_gtest$(_obj_ext_) \
 
 ##
  # Library Requisites
@@ -57,6 +57,7 @@ $(_build_)_$(_curr_)_bin_objs=
  ##
 $(_build_)_$(_curr_)_bin_libs=\
    $($(_build_)_LIB_DIR)/$(_lprefix_)dread$(_lib_ext_) \
+   $($(_build_)_LIB_DIR)/$(_lprefix_)gtest_main$(_lib_ext_) \
 
 ##
  # Target Binary

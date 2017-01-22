@@ -8,8 +8,8 @@
  *
  */
 /*=====================================================================================*/
-#ifndef dread_gtestmam_EXT_H_
-#define dread_gtestmam_EXT_H_
+#ifndef dread_gtestDREADDREAD_LINUXTEMPLATE_UTILmam_EXT_H_
+#define dread_gtestDREADDREAD_LINUXTEMPLATE_UTILmam_EXT_H_
 /*=====================================================================================*
  * Project Includes
  *=====================================================================================*/
@@ -44,4 +44,4 @@
  * Log History
  *
  *=====================================================================================*/
-#endif /*dread_gtestmam_EXT_H_*/
+#endif /*dread_gtestDREADDREAD_LINUXTEMPLATE_UTILmam_EXT_H_*/
