@@ -77,7 +77,8 @@ endef
 define $(_build_)_$(_curr_)_LIB_NAME_MAKE
 $($(_build_)_LIB_DIR)/$(addprefix $(_lprefix_), $(addsuffix $(_lib_ext_), $($(_build_)_$(_curr_)_lib_name) )) : \
 $($(_build)_GTEST_PATH)/make/$(addsuffix $(_lib_ext_), $($(_build_)_$(_curr_)_lib_name) ) $($(_build_)_LIB_DIR)
-	cp -sf $$< $$@;
+	cd $($(_build_)_LIB_DIR)
+	cp -sf $(realpath .)/$$< $$@;
 endef
 #=======================================================================================#
 # LOCAL DEFINE EXPANSIONS

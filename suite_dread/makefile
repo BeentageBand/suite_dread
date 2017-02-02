@@ -39,7 +39,7 @@ $(_build_)_MAK_DIR:=pk_project
 #======================================================#
 # PROJECT INCLUDES SEARCH PATHS
 #======================================================#
-GTEST_DIR:=$(HOME)/Dropbox/projects
+GTEST_DIR:=./reuse/pk_gtest_framework
 $(_build)_GTEST_PATH:=$(GTEST_DIR)/gtest-1.7.0
 
 $(_build_)_PROJECT_INC_DIR+=\
