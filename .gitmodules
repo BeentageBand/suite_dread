@@ -1,0 +1,12 @@
+[submodule "project_make"]
+	path = project_make
+	url = https://github.com/BeentageBand/project_make
+[submodule "support/gtest_fwk"]
+	path = support/gtest_fwk
+	url = https://github.com/BeentageBand/gtest_fwk
+[submodule "support/dbg_log"]
+	path = support/dbg_log
+	url = https://github.com/BeentageBand/dbg_log
+[submodule "ccipc"]
+	path = ccipc
+	url = https://github.com/BeentageBand/ccipc
