@@ -6,21 +6,21 @@
 namespace fwk
 {
 
-class IPC_Worker : public ipc::Worker
+class IPC_Worker : public cc::Worker
 {
 private:
 	char ** argv;
-	int * argc;
+	int argc;
 
 public:
 
-	IPC_Worker(char ** const argv, int * const argc, ipc::Thread::Attributes & attr);
+	IPC_Worker(char ** const argv, int const argc);
 	virtual ~IPC_Worker(void);
 
 private:
 	void on_start(void);
-	void on_message(ipc::Mail & mail);
-	void on_periodic(void);
+	void on_mail(cc::Mail & mail);
+	void on_loop(void);
 	void on_stop(void);
 	void main(void);
 };
